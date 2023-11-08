@@ -2,6 +2,6 @@
 
 void cue()
 {
-	char indicator[] = "#cisfun$";
+	char indicator[] = "#cisfun$ ";
 	write(STDOUT_FILENO, indicator, sizeof(indicator) - 1);
 }

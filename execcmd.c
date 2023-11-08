@@ -2,14 +2,21 @@
 
 void exec_cmd(char *cmd)
 {
-	char *cmdArgs[2];
-	char *envp[] = {NULL};
-	cmdArgs[0] = cmd;
-	cmdArgs[1] = NULL;
+	char *cmd_path = get_command_path(cmd);
+	char *args[2];
+	
+	if (cmd_path == NULL)
+	{
+		write(STDOUT_FILENO, "Command not found\n", 18);
+		_exit(EXIT_FAILURE);
+	}
 
-	execve(cmd, cmdArgs, envp);
-	perror(cmd);
-	exit(EXIT_FAILURE);
+	args[0] = cmd;
+	args[1] = NULL;
+
+	execve(cmd_path, args, environ);
+	perror("execve");
+	_exit(EXIT_FAILURE);
 }
 
 char *c_e()
@@ -28,4 +35,9 @@ char *c_e()
 		entry[d_r - 1] = '\0';
 	}
 	return entry;
+}
+
+void exit_shell()
+{
+	_exit(0);
 }

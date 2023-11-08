@@ -2,42 +2,60 @@
 
 int main()
 {
-	char *entry;
-	pid_t pid;
-
 	while (1)
 	{
-		cue();
-		entry = c_e();
+	cue();
+	process_commands();
+	}
+	return 0;
+}
 
-		if (entry == NULL)
-		{
-			break;
-		}
-		if (entry[0] == '\0')
+void process_commands()
+{
+	char *entry = c_e();
+
+	if (entry == NULL)
+	{
+		exit_shell();
+	}
+	
+	if (entry[0] != '\0')
+	{
+		char *args[2];
+		args[0] = _afstrtok(entry, " ");
+		args[1] = NULL;
+
+		if (strcmp(args[0], "exit") == 0)
 		{
 			free(entry);
-			continue;
+			exit_shell();
 		}
-
-		pid = fork();
-
-		if (pid == -1)
+		else if (strcmp(args[0], "env") == 0)
 		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		else if (pid == 0)
-		{
-			exec_cmd(entry);
+			free(entry);
+			print_environment();
 		}
 		else
 		{
-			int result;
-			waitpid(pid, &result, 0);
-		}
+			pid_t pid = fork();
 
-		free(entry);
+			if (pid == -1)
+			{
+				perror("fork");
+				exit(EXIT_FAILURE);
+			}
+			else if (pid == 0)
+			{
+				exec_cmd(args[0]);
+				free(entry);
+				_exit(EXIT_FAILURE);
+			}
+			else
+			{
+				int result;
+				waitpid(pid, &result, 0);
+			}
+		}
 	}
-	return 0;
+	free(entry);
 }
