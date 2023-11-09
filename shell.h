@@ -12,6 +12,7 @@
 
 # define length_of_input 200
 #define MAX_PATH_LENGTH 500
+#define MAX_ARGUMENTS 200
 
 extern char **environ;
 

@@ -21,9 +21,22 @@ void process_commands()
 	
 	if (entry[0] != '\0')
 	{
-		char *args[2];
-		args[0] = _afstrtok(entry, " ");
-		args[1] = NULL;
+		char *args[MAX_ARGUMENTS];
+		int arg_count = 0;
+		
+		char *token = _afstrtok(entry, " ");
+		while (token != NULL)
+		{
+			args[arg_count] = token;
+			arg_count++;
+
+			if (arg_count >= MAX_ARGUMENTS - 1)
+			{
+				break;
+			}
+			token = _afstrtok(NULL, " ");
+		}
+		args[arg_count] = NULL;
 
 		if (strcmp(args[0], "exit") == 0)
 		{

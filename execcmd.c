@@ -3,16 +3,34 @@
 void exec_cmd(char *cmd)
 {
 	char *cmd_path = get_command_path(cmd);
-	char *args[2];
+	char *token;
+	char *args[MAX_ARGUMENTS];
+	int arg_count;
 	
 	if (cmd_path == NULL)
 	{
 		write(STDOUT_FILENO, "Command not found\n", 18);
 		_exit(EXIT_FAILURE);
 	}
+	
+	token = _afstrtok(cmd, " ");
+	arg_count = 0;
 
-	args[0] = cmd;
-	args[1] = NULL;
+	while (token != NULL)
+	{
+		args[arg_count] = token;
+		arg_count++;
+
+		if (arg_count >= MAX_ARGUMENTS - 1)
+		{
+			break;
+		}
+
+		token = _afstrtok(NULL, " ");
+	}
+	
+	args[arg_count] = NULL;
+
 
 	execve(cmd_path, args, environ);
 	perror("execve");

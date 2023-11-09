@@ -47,29 +47,43 @@ char* _afstrcat(char *dest, const char *src)
 
 char *af_strdup(const char *str)
 {
+	size_t length;
+	size_t i;
+	char *duplicate;
+	
 	if (str == NULL)
 	{
 		return NULL;
 	}
 
-	size_t length = _afstrlen(str) + 1;
+	length = _afstrlen(str) + 1;
 	
-	char *duplicate = (char *)malloc(length);
+	duplicate = (char *)malloc(length);
 
-	if (duplicate != NULL)
+	if (duplicate == NULL)
 	{
-		_afstrcpy(duplicate, str);
+		return NULL;
 	}
+	
+	for (i = 0; i < length; i++)
+
+	{
+		duplicate[i] = str[i];
+	}
+
 	return duplicate;
 }
 
 char *af_strcpy(char *dest, const char *src)
 {
+	char *dest_start;
+	
 	if (dest == NULL || src == NULL)
 	{
 		return NULL;
 	}
-	char *dest_start = dest;
+	
+	dest_start = dest;
 
 	while (*src)
 	{

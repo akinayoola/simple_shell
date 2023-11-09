@@ -22,9 +22,18 @@ void print_environment()
 
 char *get_command_path(const char *cmd)
 {
-	char *path_env = getenv("PATH");
-	char *path_copy = strdup(path_env);
-	char *token = strtok(path_copy, ":");
+	char *path_env;
+	char *path_copy;
+	char *token;
+	
+	if (strchr(cmd, '/'))
+	{
+		return strdup(cmd);
+	}
+
+	path_env = getenv("PATH");
+	path_copy = strdup(path_env);
+	token = strtok(path_copy, ":");
 
 	while (token != NULL)
 	{
