@@ -14,6 +14,9 @@
 #define MAX_PATH_LENGTH 500
 #define MAX_ARGUMENTS 200
 
+#define PROD(c) (puts(c))
+#define MP(c) (write(STDOUT_FILENO, c, _afstrlen(c)))
+
 extern char **environ;
 
 char *_afstrtok(char *str, const char *delim);
@@ -24,6 +27,7 @@ struct Environment
 	char *value;
 };
 
+void executecommand(char *cmd, char *cmdargs[]);
 void process_commands();
 void cue();
 void exec_cmd(char *cmd);
