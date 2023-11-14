@@ -2,48 +2,35 @@
 
 int main()
 {
-	pid_t pid;
 	char *entry;
+	int status = 0;
 	while (1)
 	{
 		cue();
 		entry = c_e();
 		
-		if (!entry)
+		if (entry == NULL)
 		{
 			break;
 		}
 		
 		if (entry[0] != '\0')
 		{
-			pid = fork();
-			
-			if (pid == -1)
-			{
-				perror("fork");
-				exit(EXIT_FAILURE);
-			}
+			char *commands[10];
+			int i = 0;
+			char *token;
 
-			else if (pid == 0)
+			for (token = _afstrtok(entry, ";"); token && i < 10; token = _afstrtok(NULL, ";"))
 			{
-				char *token;
-				char *cmdargs[10];
-				int i = 0;
-				for (token = _afstrtok(entry, " "); token && i < 10; token = _afstrtok(NULL, " "))
-				{
-					cmdargs[i++] = token;
-				}
-				cmdargs[i] = NULL;
-				executecommand(cmdargs[0], cmdargs);
-				exit(EXIT_SUCCESS);
+				commands[i++] = token;
 			}
-			else
-			{
-				int result;
-				waitpid(pid, &result, 0);
-			}
+			commands[i] = NULL;
+			
+			handle_commands(commands, &status);
+
 			free(entry);
 		}
 	}
 	return 0;
 }
+			

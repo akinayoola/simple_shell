@@ -13,6 +13,8 @@
 # define length_of_input 200
 #define MAX_PATH_LENGTH 500
 #define MAX_ARGUMENTS 200
+#define MAX_INPUT 100
+#define MAX_ARGS 10
 
 #define PROD(c) (puts(c))
 #define MP(c) (write(STDOUT_FILENO, c, _afstrlen(c)))
@@ -27,12 +29,18 @@ struct Environment
 	char *value;
 };
 
+void handle_commands(char *commands[], int *status);
+void handle_logical_operators(char *cmdargs[], int logic_operators, int *status);
+void change_directory(char *cmdargs[]);
+void unset_env(char *cmdargs[]);
+void set_env(char *cmdargs[]);
 void executecommand(char *cmd, char *cmdargs[]);
+ssize_t _afgetline(char **lineptr, size_t *n, FILE *stream);
 void process_commands();
 void cue();
 void exec_cmd(char *cmd);
 char *get_command_path(const char *cmd);
-void exit_shell();
+void exit_shell(char *cmdargs[]);
 void print_environment();
 char *c_e();
 size_t _afstrlen(const char *str);
