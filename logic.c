@@ -1,8 +1,8 @@
 #include "shell.h"
 /**
  * _hlo - hadle operators
- * @cmdards: store variables
- * @logic_operators: operators to be handled
+ * @cmdargs: store variables
+ * @logic_operator: operators to be handled
  * @status: status of operators
  * Return: 0
  */
