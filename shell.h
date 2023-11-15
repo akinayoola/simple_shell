@@ -23,25 +23,19 @@ extern char **environ;
 
 char *_afstrtok(char *str, const char *delim);
 
-struct Environment
-{
-	char *name;
-	char *value;
-};
-
 void handle_commands(char *commands[], int *status);
-void handle_logical_operators(char *cmdargs[], int logic_operators, int *status);
+void _hlo_(char *cmdargs[], int logic_operators, int *status);
 void change_directory(char *cmdargs[]);
 void unset_env(char *cmdargs[]);
 void set_env(char *cmdargs[]);
 void executecommand(char *cmd, char *cmdargs[]);
 ssize_t _afgetline(char **lineptr, size_t *n, FILE *stream);
-void process_commands();
-void cue();
+void process_commands(void);
+void cue(void);
 void exec_cmd(char *cmd);
 char *get_command_path(const char *cmd);
 void exit_shell(char *cmdargs[]);
-void print_environment();
+void print_environment(void);
 char *c_e();
 size_t _afstrlen(const char *str);
 int _afstrcmp(const char *s1, const char *s2);
