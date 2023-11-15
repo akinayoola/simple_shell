@@ -7,10 +7,13 @@ int main(void)
 {
 	char *entry;
 	int status = 0;
+	int interactive_mode = isatty(STDIN_FILENO);
 
 	while (1)
 	{
-		cue();
+		if (interactive_mode)
+			cue();
+
 		entry = c_e();
 
 		if (entry == NULL)
