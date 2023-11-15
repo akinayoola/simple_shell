@@ -1,5 +1,11 @@
 #include "shell.h"
-
+/**
+ * handle_logical_operators - hadle operators
+ * @cmdards: store variables
+ * @logic_operators: operators to be handled
+ * @status: status of operators
+ * Return: 0
+ */
 void handle_logical_operators(char *cmdargs[], int logic_operator, int *status)
 {
 	pid_t pid;
@@ -21,7 +27,8 @@ void handle_logical_operators(char *cmdargs[], int logic_operator, int *status)
 	{
 		waitpid(pid, &result, 0);
 
-		if ((logic_operator == 0 && result == 0) || (logic_operator == 1 && result != 0))
+		if ((logic_operator == 0 && result == 0) ||
+				(logic_operator == 1 && result != 0))
 		{
 			*status = 0;
 		}
@@ -31,22 +38,27 @@ void handle_logical_operators(char *cmdargs[], int logic_operator, int *status)
 		}
 	}
 }
-
+/**
+ * handle_commands - handle commands of input
+ * @commands: commands to be handles
+ * @status: command status
+ */
 void handle_commands(char *commands[], int *status)
 {
 	int i = 0;
+
 	while (commands[i] != NULL)
 	{
 		char *token;
 		char *cmdargs[MAX_ARGS];
 		int j = 0;
-		
-		for (token = strtok(commands[i], " "); token && j < MAX_ARGS - 1; token = strtok(NULL, " "))
+
+		for (token = strtok(commands[i], " "); token && j < MAX_ARGS - 1;
+				token = strtok(NULL, " "))
 		{
 			cmdargs[j++] = token;
 		}
 		cmdargs[j] = NULL;
-
 		if (cmdargs[0] != NULL)
 		{
 			if (strcmp(cmdargs[0], "exit") == 0)
@@ -72,6 +84,7 @@ void handle_commands(char *commands[], int *status)
 			else
 			{
 				int logic_operator = 0;
+
 				if (strstr(commands[i], "&&"))
 				{
 					logic_operator = 0;

@@ -1,15 +1,20 @@
 #include "shell.h"
-
-void print_environment()
+/**
+ * print_environment - print environment variables
+ */
+void print_environment(void)
 {
 	char **env;
-	
+
 	for (env = environ; *env != NULL; env++)
 	{
 		PROD(*env);
 	}
 }
-
+/**
+ * set_env - set environmnet variables
+ * @cmdargs: store vaiables here
+ */
 void set_env(char *cmdargs[])
 {
 	if (cmdargs[1] != NULL && cmdargs[2] != NULL && cmdargs[3] == NULL)
@@ -24,7 +29,10 @@ void set_env(char *cmdargs[])
 		fprintf(stderr, "Usage: setenv VARIABLE VALUE\n");
 	}
 }
-
+/**
+ * unset_env - unset environmnet variables
+ * @cmdargs: store vaiables here
+ */
 void unset_env(char *cmdargs[])
 {
 	if (cmdargs[1] != NULL && cmdargs[2] == NULL)
@@ -39,12 +47,15 @@ void unset_env(char *cmdargs[])
 		fprintf(stderr, "Usage: unsetenv VARIABLE\n");
 	}
 }
-
+/**
+ * change_directory - chamge working directory
+ * @cmdargs: store vaiables here
+ */
 void change_directory(char *cmdargs[])
 {
 	char *path;
 
-	if(cmdargs[1] == NULL)
+	if (cmdargs[1] == NULL)
 	{
 		path = getenv("HOME");
 	}
@@ -56,7 +67,7 @@ void change_directory(char *cmdargs[])
 	{
 		path = cmdargs[1];
 	}
-	
+
 	if (chdir(path) == -1)
 	{
 		perror("cd");

@@ -1,6 +1,8 @@
 #include "shell.h"
-
-void cue()
+/**
+ * cue - print prompt
+ */
+void cue(void)
 {
 	MP("#cisfun$ ");
 }
